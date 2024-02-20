@@ -1,9 +1,12 @@
-FROM ubuntu:jammy
+ARG NODE_VERSION=20.11.1
+
+FROM node:${NODE_VERSION}-alpine
 
 WORKDIR /app
 EXPOSE 3000
 
 COPY . /app/
 
-RUN apt-get update && apt-get install -y sudo curl wget git
-RUN curl -fsSL https://deb.nodesource.com/setup_21.x | sudo -E bash - && sudo apt-get install -y nodejs
+RUN npm install
+
+CMD ["npm", "start"]
