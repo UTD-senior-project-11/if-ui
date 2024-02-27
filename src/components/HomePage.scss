@@ -16,7 +16,12 @@
     -webkit-background-clip: text;
 }
 
-.home-page-button {
+.home-page-buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.home-page-login-button {
     display: inline-block;
     outline: 0;
     border: none;
@@ -24,7 +29,38 @@
     cursor: pointer;
     padding: 0.5em 1.2em;
     font-size: 1.4em;
-    height: 2.1em;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(90deg,#5522fa 0,#0074e4 100%);
+    border-radius: 50px;
+    transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+
+.home-page-signup-button {
+    display: inline-block;
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0.5em 1.2em;
+    font-size: 1.4em;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(90deg,#5522fa 0,#0074e4 100%);
+    border-radius: 50px;
+    transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+
+.home-page-grid-button {
+    display: inline-block;
+    outline: 0;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0.5em 1.2em;
+    font-size: 1.4em;
     font-weight: 400;
     color: #fff;
     text-align: center;
