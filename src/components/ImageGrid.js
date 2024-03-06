@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./ImageGrid.scss";
+import Checkbox from '@mui/material/Checkbox';
+import Alert from '@mui/material/Alert';
 
 import img0 from "../assets/0.jpg";
 import img1 from "../assets/1.jpg";
@@ -16,6 +18,9 @@ const GridItem = (props) => {
   return (
     <div className="image-grid-item">
       <div className="image-grid-item-contents">
+        <div className="image-grid-item-checkbox">
+          {props.showCheckbox && <Checkbox {...props.checkedImages} />}
+        </div>
         <img
           alt={"thumbnail"}
           className="image-grid-item-image"
@@ -32,40 +37,55 @@ const GridItem = (props) => {
 
 const ImageGrid = () => {
   const [sideImage, setSideImage] = useState();
+  const [showCheckbox, setShowCheckbox] = useState(false);
+  const [checkedImages, setCheckedImages] = useState();
   let gridItemsArray = []; // grid items to be rendered
 
   // placeholder hardcoded images in lieu of a backend
   gridItemsArray.push(
-    <GridItem img={img0} onClick={() => handleClick(img0)} />
+    <GridItem img={img0} onClick={() => handleClick(img0)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
   gridItemsArray.push(
-    <GridItem img={img1} onClick={() => handleClick(img1)} />
+    <GridItem img={img1} onClick={() => handleClick(img1)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
   gridItemsArray.push(
-    <GridItem img={img2} onClick={() => handleClick(img2)} />
+    <GridItem img={img2} onClick={() => handleClick(img2)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
   gridItemsArray.push(
-    <GridItem img={img3} onClick={() => handleClick(img3)} />
+    <GridItem img={img3} onClick={() => handleClick(img3)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
   gridItemsArray.push(
-    <GridItem img={img4} onClick={() => handleClick(img4)} />
+    <GridItem img={img4} onClick={() => handleClick(img4)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
   gridItemsArray.push(
-    <GridItem img={img5} onClick={() => handleClick(img5)} />
+    <GridItem img={img5} onClick={() => handleClick(img5)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
   );
 
   function handleClick(img) {
     setSideImage(img);
   }
 
+  function enableSelect(img) {
+    setShowCheckbox(!showCheckbox);
+  }
+  
+  function whitelist(img) {
+    
+  }
+
   return (
     <div className="image-grid">
       <div className="image-grid-actions-bar">
         <span>Actions:</span>
-        <button className="image-grid-action-button" type="button">
+        <button className="image-grid-action-button button-select" type="button" onClick={enableSelect}>
+          Select
+        </button>
+        <button className="image-grid-action-button button-whitelist" type="button" onClick={whitelist}>
           Whitelist
         </button>
       </div>
+      
+      {/*showCheckbox && <Alert severity="info" sx={{paddingTop: "50px"}}>Select images to perform actions.</Alert>*/}
 
       <div className="image-grid-content">
         <div className="image-grid-items">
