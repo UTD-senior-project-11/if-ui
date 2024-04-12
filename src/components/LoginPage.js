@@ -29,11 +29,19 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   }
 
+  //Forwards data to API
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("form submitted");
+    console.log(input);
+    /*fetch("http://localhost:3307/admin/login",{
+      method: "POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify()
+    }).then(()=>{
+      console.log("form submitted")
+    })
     localStorage.setItem("logged_in", true);
-    // TODO: backend api call
+    */
   }
 
   return (
