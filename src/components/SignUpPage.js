@@ -29,11 +29,26 @@ const SignUpPage = () => {
     setShowPassword(!showPassword);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("form submitted");
+    var jsonData = {
+      "Administrator":
+      {
+        "adminUser": input.username,
+        "adminPass": input.password
+      }
+    }
+    console.log(jsonData)
+    fetch("http://localhost:8080/administrator/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jsonData)
+    }).then(() => {
+      console.log("Admin account added")
+    })
     localStorage.setItem("logged_in", true);
-    // TODO: backend api call
   }
 
   return (
