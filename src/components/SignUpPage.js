@@ -39,7 +39,7 @@ const SignUpPage = () => {
       }
     }
     console.log(jsonData)
-    fetch("http://localhost:8080/administrator/signup", {
+    fetch("http://localhost:8082/administrator/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
