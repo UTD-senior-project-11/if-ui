@@ -85,7 +85,7 @@ const ImageGrid = () => {
         </button>
       </div>
       
-      {/*showCheckbox && <Alert severity="info" sx={{paddingTop: "50px"}}>Select images to perform actions.</Alert>*/}
+      {showCheckbox && <Alert severity="info" sx={{paddingTop: "50px"}}>Select images to perform actions.</Alert>}
 
       <div className="image-grid-content">
         <div className="image-grid-items">

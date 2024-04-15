@@ -9,8 +9,8 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 
-const pageNames = ["Home", "Images", "Login", "Sign Up"];
-const pageRoutes = ["Home", "Grid", "Login", "Signup"];
+const pageNames = ["Home", "Images", "Upload", "Login", "Sign Up"];
+const pageRoutes = ["Home", "Grid", "Upload", "Login", "Signup"];
 
 const theme = createTheme({
   palette: {
