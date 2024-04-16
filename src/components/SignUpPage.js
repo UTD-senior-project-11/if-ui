@@ -32,11 +32,8 @@ const SignUpPage = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     var jsonData = {
-      "Administrator":
-      {
-        "adminUser": input.username,
-        "adminPass": input.password
-      }
+      "adminUser": input.username,
+      "adminPass": input.password
     }
     console.log(jsonData)
     fetch("http://localhost:8080/administrator/signup", {

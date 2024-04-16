@@ -29,11 +29,38 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("form submitted");
-    localStorage.setItem("logged_in", true);
-    // TODO: backend api call
+    var jsonData = {
+      "adminUser": input.username,
+      "adminPass": input.password
+    }
+    console.log(jsonData)
+    //Check if account exists and return login status
+    await fetch("http://localhost:8080/administrator/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(jsonData)
+    }).then(() => {
+      console.log("Checking account")
+    })
+    await fetch("http://localhost:8080/administrator/getlogin", {
+      method: "GET"
+    }).then(res=>res.json())
+    .then((result) => {
+      localStorage.setItem("logged_in", result);
+      console.log("Updating status");
+    }).then(
+      getStatus()
+    )
+  }
+
+  //Test to check login status
+  function getStatus(){
+    const loginStatus = localStorage.getItem("logged_in");
+    console.log(loginStatus);
   }
 
   return (
