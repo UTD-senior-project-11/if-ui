@@ -53,7 +53,7 @@ const LoginPage = () => {
       localStorage.setItem("logged_in", result);
       console.log("Updating status");
     }).then(
-      getStatus()
+      getStatus
     )
   }
 

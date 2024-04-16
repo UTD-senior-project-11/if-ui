@@ -125,11 +125,20 @@ const UploadPage = () => {
 
             readImageFile(uploadedImage)
                 .then((base64Image) => {
+                    //console.log(base64Image)
+                    var strImage = base64Image.split("base64,")[1];
+                    var jsonData = {
+                        "imageData": strImage
+                    }
+                    console.log(strImage)
+                    //console.log(JSON.stringify(jsonData))
                     setShowSpinner(true);
-
-                    return fetch("localhost:8080/administrator/upload", {
-                        method: 'post',
-                        body: base64Image
+                    return fetch("http://localhost:8080/image/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                          },
+                        body: JSON.stringify(jsonData)
                     });
                 })
                 .then(() => {
