@@ -128,7 +128,7 @@ const UploadPage = () => {
                     //console.log(base64Image)
                     var strImage = base64Image.split("base64,")[1];
                     var jsonData = {
-                        "imageData": strImage
+                        "base64": strImage
                     }
                     console.log(strImage)
                     //console.log(JSON.stringify(jsonData))
