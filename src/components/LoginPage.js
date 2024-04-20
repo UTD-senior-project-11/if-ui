@@ -1,6 +1,5 @@
 import "./LoginPage.scss";
 import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   IconButton,
@@ -10,15 +9,18 @@ import {
   TextField,
   FormControl,
 } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   document.title = "Login | Image Filter";
   const [input, setInput] = useState({
     username: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loginFail, setLoginFail] = useState(false);
 
   // Updates input state variable when form data changes
   function handleChange(event, property) {
@@ -60,6 +62,14 @@ const LoginPage = () => {
   //Test to check login status
   function getStatus(){
     const loginStatus = localStorage.getItem("logged_in");
+    if(loginStatus === "false") {
+      setLoginFail(true);
+      console.log("not logged in!!")
+    }
+    else
+    {
+      navigate("Home");
+    }
     console.log(loginStatus);
   }
 
@@ -111,6 +121,17 @@ const LoginPage = () => {
           <Button variant="contained" type="submit">
             Submit
           </Button>
+          {loginFail &&
+          <Alert
+            severity="error"
+            variant="filled"
+            sx={{ color: "white", width: "fit-content" }}
+            onClose={() => {
+                setLoginFail(false)
+            }}
+        >
+            Incorrect username or password
+        </Alert>}
           <p>
             Don't have an account? <a href="/#/signup">Sign up here!</a>
           </p>

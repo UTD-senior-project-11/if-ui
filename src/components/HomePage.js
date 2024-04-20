@@ -1,10 +1,10 @@
 import "./HomePage.scss";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  let loggedIn = localStorage.getItem("logged_in") || false; // TODO with backend. Local storage for token?
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("logged_in") || "false");
   document.title = "Home Page | Image Filter";
 
   function navigateToPage(page) {
@@ -15,7 +15,7 @@ const HomePage = () => {
     <div className="home-page">
       <h1 className="home-page-header">Welcome to ImageFilter</h1>
 
-      {!loggedIn ? (
+      {loggedIn === "false" ? (
         <div className="home-page-buttons-container">
           <button
             className="home-page-login-button"
@@ -33,13 +33,22 @@ const HomePage = () => {
           </button>
         </div>
       ) : (
-        <button
-          className="home-page-grid-button"
-          type="button"
-          onClick={() => navigateToPage("/grid")}
-        >
-          View Images?
-        </button>
+        <div className="home-page-buttons-container">
+          <button
+            className="home-page-grid-button"
+            type="button"
+            onClick={() => navigateToPage("/grid")}
+          >
+            View Images?
+          </button>
+          <button
+            className="home-page-upload-button"
+            type="button"
+            onClick={() => navigateToPage("/upload")}
+          >
+            Upload Image
+          </button>
+        </div>
       )}
     </div>
   );

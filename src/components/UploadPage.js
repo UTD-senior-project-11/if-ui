@@ -17,7 +17,7 @@ const UploadPage = () => {
     const errorMessages = {
         url: "Invalid URL",
         imageMissing: "Don't forget to upload an image!",
-        filetype: "Images must be .png, .jpg, or .jpeg.",
+        filetype: "Images must be .jpg or .jpeg.",
         filesize: "Images must be less than 10MB.",
     };
 
@@ -29,7 +29,7 @@ const UploadPage = () => {
     /*
      * Updates uploadedImage state only if certain conditions are met
      * Current conditions:
-     ** File type is .png, .jpg, or .jpeg
+     ** File type is .jpg or .jpeg
      ** File size is less than 5MB
      */
     const handleImageUpload = (event, dragAndDrop = false) => {
@@ -67,8 +67,8 @@ const UploadPage = () => {
     };
 
     const validateFileType = (file) => {
-        if (file.type === "image/png" || file.type === "image/jpeg") {
-            // Accepts .jpg, .jpeg, .png
+        if (file.type === "image/jpeg") {
+            // Accepts .jpg, .jpeg
             return true;
         } else {
             return false;
@@ -128,9 +128,9 @@ const UploadPage = () => {
                     //console.log(base64Image)
                     var strImage = base64Image.split("base64,")[1];
                     var jsonData = {
-                        "imageData": strImage
+                        "base64": strImage
                     }
-                    console.log(strImage)
+                    console.log(jsonData)
                     //console.log(JSON.stringify(jsonData))
                     setShowSpinner(true);
                     return fetch("http://localhost:8080/image/add", {
@@ -193,7 +193,7 @@ const UploadPage = () => {
                                                 className="upload-page-upload-image-text-limits-filetype"
                                                 style={{ color: errors.filetype ? "red" : "black" }}
                                             >
-                                                PNG or JPEG only.
+                                                JPEG files only.
                                             </span>
                                             <br />
                                             <span
@@ -210,7 +210,7 @@ const UploadPage = () => {
                         <input
                             id="files"
                             type="file"
-                            accept="image/png, image/jpeg"
+                            accept="image/jpeg"
                             multiple={true}
                             style={{ display: "none" }}
                             onChange={(e) => handleImageUpload(e)}

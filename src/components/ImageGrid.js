@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./ImageGrid.scss";
 import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
-
-import img0 from "../assets/0.jpg";
-import img1 from "../assets/1.jpg";
-import img2 from "../assets/2.jpg";
-import img3 from "../assets/3.jpg";
-import img4 from "../assets/4.jpg";
-import img5 from "../assets/5.jpg";
 
 const GridItem = (props) => {
   function restoreOriginalDimensions(e) {
@@ -24,7 +17,7 @@ const GridItem = (props) => {
         <img
           alt={"thumbnail"}
           className="image-grid-item-image"
-          src={props.img}
+          src={props.imgUrl}
           onClick={props.onClick}
           onLoad={restoreOriginalDimensions}
           height={window.innerWidth <= 600 ? "100px" : "200px"}
@@ -39,27 +32,45 @@ const ImageGrid = () => {
   const [sideImage, setSideImage] = useState();
   const [showCheckbox, setShowCheckbox] = useState(false);
   const [checkedImages, setCheckedImages] = useState();
-  let gridItemsArray = []; // grid items to be rendered
+  const [gridItemsArray, setGridItemsArray] = useState([]);
+  const fetched = useRef(false);
 
-  // placeholder hardcoded images in lieu of a backend
-  gridItemsArray.push(
-    <GridItem img={img0} onClick={() => handleClick(img0)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
-  gridItemsArray.push(
-    <GridItem img={img1} onClick={() => handleClick(img1)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
-  gridItemsArray.push(
-    <GridItem img={img2} onClick={() => handleClick(img2)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
-  gridItemsArray.push(
-    <GridItem img={img3} onClick={() => handleClick(img3)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
-  gridItemsArray.push(
-    <GridItem img={img4} onClick={() => handleClick(img4)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
-  gridItemsArray.push(
-    <GridItem img={img5} onClick={() => handleClick(img5)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
-  );
+  async function getImages() {
+    console.log("Fetching images!")
+    var base64s;
+    await fetch("http://localhost:8080/image/getAll", {
+      method: "GET"
+    })
+    .then(response => response.json())
+    .then((result) => { base64s = result; })
+    convertToGridItems(base64s);
+  }
+  function convertToGridItems(base64s) {
+    base64s.forEach((base64) => {
+      let imageUrl = base64ToImage(base64);
+      setGridItemsArray(gridItemsArray => [...gridItemsArray, 
+        <GridItem imgUrl={imageUrl} onClick={() => handleClick(imageUrl)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
+      ]);
+    })
+  }
+  function base64ToImage(str) {
+    const binaryString = atob(str);
+    const bytes = new Uint8Array(binaryString.length);
+
+    for (let i=0;i<binaryString.length;i++)
+    {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const blob = new Blob([bytes], { type: 'image/jpeg' });
+    const imageUrl = URL.createObjectURL(blob);
+
+    return imageUrl;
+  }
+  if(!fetched.current) { // prevent fetching multiple times
+    getImages();
+    fetched.current = true;
+  }
 
   function handleClick(img) {
     setSideImage(img);

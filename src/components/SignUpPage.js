@@ -1,6 +1,5 @@
 import "./SignUpPage.scss";
 import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   IconButton,
@@ -10,9 +9,10 @@ import {
   TextField,
   FormControl,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   document.title = "Sign Up | Image Filter";
   const [input, setInput] = useState({
     username: "",
@@ -46,6 +46,7 @@ const SignUpPage = () => {
       console.log("Admin account added")
     })
     localStorage.setItem("logged_in", true);
+    navigate("Home");
   }
 
   return (

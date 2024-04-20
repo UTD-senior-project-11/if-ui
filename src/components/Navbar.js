@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Box,
@@ -20,9 +20,21 @@ const theme = createTheme({
   },
 });
 
-// let loggedIn = localStorage.getItem("logged_in") || false; // TODO with backend. Local storage for token?
-
 function Navbar() {
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("logged_in") || "false");
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setLoggedIn(localStorage.getItem("logged_in"));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    }
+  }, []);
+
   return (
     <Box sx={{ display: "flex" }}>
       <ThemeProvider theme={theme}>
@@ -55,22 +67,94 @@ function Navbar() {
             </Typography>
 
             <Box sx={{ display: "block" }}>
-              {pageNames.map((page, index) => (
-                <Button
-                  key={page}
-                  sx={{
-                    color: "#000",
-                    "@media (max-width: 600px)": {
-                      paddingLeft: 0,
-                      paddingRight: 0,
-                    },
-                  }}
-                  component={Link}
-                  to={pageRoutes[index]}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Button
+                key={pageNames[0]}
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                component={Link}
+                to={pageRoutes[0]}
+              >
+                {pageNames[0]}
+              </Button>
+              {loggedIn === "true" && <Button
+                key={pageNames[1]}
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                component={Link}
+                to={pageRoutes[1]}
+              >
+                {pageNames[1]}
+              </Button>}
+              {loggedIn === "true" && <Button
+                key={pageNames[2]}
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                component={Link}
+                to={pageRoutes[2]}
+              >
+              {pageNames[2]}
+              </Button>}
+              {loggedIn === "true" && <Button
+                key="Logout"
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                onClick={() => {
+                  console.log("logging out");
+                  localStorage.setItem("logged_in", false);
+              }}
+                component={Link}
+                to={pageRoutes[0]}
+              >
+                Log Out
+              </Button>}
+              {loggedIn === "false" && <Button
+                key={pageNames[3]}
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                component={Link}
+                to={pageRoutes[3]}
+              >
+              {pageNames[3]}
+              </Button>}
+              {loggedIn === "false" && <Button
+                key={pageNames[4]}
+                sx={{
+                  color: "#000",
+                  "@media (max-width: 600px)": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                  },
+                }}
+                component={Link}
+                to={pageRoutes[4]}
+              >
+              {pageNames[4]}
+              </Button>}
             </Box>
           </Toolbar>
         </AppBar>
