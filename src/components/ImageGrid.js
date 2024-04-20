@@ -79,10 +79,61 @@ const ImageGrid = () => {
   function enableSelect(img) {
     setShowCheckbox(!showCheckbox);
   }
-  
-  function whitelist(img) {
-    
-  }
+
+  /*
+  * Encodes the uploaded image to a base64 string and
+  * Stores the encoded image, along with other metadata, in a JSON object then
+  * Sends it to the backend.
+  */
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    console.log("Uploading image");
+
+    try {
+        const reader = new FileReader();
+        var base64Image = "";
+
+        // Create a promise to handle the asynchronous file reading
+        const readImageFile = (file) => {
+            return new Promise((resolve, reject) => {
+                reader.onload = function (e) {
+                    base64Image = e.target?.result; // Encode image to base64 string
+                    resolve(base64Image);
+                };
+
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        };
+
+        readImageFile(file)
+            .then((base64Image) => {
+                //console.log(base64Image)
+                var strImage = base64Image.split("base64,")[1];
+                var jsonData = {
+                    "base64": strImage
+                }
+                console.log(jsonData)
+                //console.log(JSON.stringify(jsonData))
+                return fetch("http://localhost:8080/image/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                      },
+                    body: JSON.stringify(jsonData)
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+  };
 
   return (
     <div className="image-grid">
@@ -91,9 +142,12 @@ const ImageGrid = () => {
         <button className="image-grid-action-button button-select" type="button" onClick={enableSelect}>
           Select
         </button>
-        <button className="image-grid-action-button button-whitelist" type="button" onClick={whitelist}>
-          Whitelist
-        </button>
+        <span>Check image: <input
+          id="files"
+          type="file"
+          accept="image/jpeg"
+          onChange={(e) => handleImageUpload(e)}
+        /></span>
       </div>
       
       {showCheckbox && <Alert severity="info" sx={{paddingTop: "50px"}}>Select images to perform actions.</Alert>}
