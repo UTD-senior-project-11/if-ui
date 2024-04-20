@@ -117,9 +117,8 @@ const ImageGrid = () => {
                 var jsonData = {
                     "base64": strImage
                 }
-                console.log(jsonData)
                 //console.log(JSON.stringify(jsonData))
-                return fetch("http://localhost:8080/image/add", {
+                return fetch("http://localhost:8080/image/compare", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -129,6 +128,15 @@ const ImageGrid = () => {
             })
             .catch((error) => {
                 console.error("Error:", error);
+            })
+            .then(() => {
+              return fetch("http://localhost:8080/image/compareresult", {
+                method: "GET"
+              })
+            })
+            .then(response => response.json())
+            .then((res) => {
+              console.log(res);
             });
     } catch (error) {
         console.error("Error:", error.message);
