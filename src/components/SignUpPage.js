@@ -47,6 +47,7 @@ const SignUpPage = () => {
     })
     localStorage.setItem("logged_in", true);
     navigate("Home");
+    window.location.reload();
   }
 
   return (

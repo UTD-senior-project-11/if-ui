@@ -69,6 +69,7 @@ const LoginPage = () => {
     else
     {
       navigate("Home");
+      window.location.reload();
     }
     console.log(loginStatus);
   }

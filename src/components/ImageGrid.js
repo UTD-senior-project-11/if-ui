@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
 import "./ImageGrid.scss";
-import Checkbox from '@mui/material/Checkbox';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,9 +15,6 @@ const GridItem = (props) => {
   return (
     <div className="image-grid-item">
       <div className="image-grid-item-contents">
-        <div className="image-grid-item-checkbox">
-          {props.showCheckbox && <Checkbox {...props.checkedImages} />}
-        </div>
         <img
           alt={"thumbnail"}
           className="image-grid-item-image"
@@ -36,8 +31,6 @@ const GridItem = (props) => {
 
 const ImageGrid = () => {
   const [sideImage, setSideImage] = useState();
-  const [showCheckbox, setShowCheckbox] = useState(false);
-  const [checkedImages, setCheckedImages] = useState();
   const [gridItemsArray, setGridItemsArray] = useState([]);
   const [checkAI, setCheckAI] = useState(false);
   const [banned, setBanned] = useState(false);
@@ -57,7 +50,7 @@ const ImageGrid = () => {
     base64s.forEach((base64) => {
       let imageUrl = base64ToImage(base64);
       setGridItemsArray(gridItemsArray => [...gridItemsArray, 
-        <GridItem imgUrl={imageUrl} onClick={() => handleClick(imageUrl)} checkedImages={checkedImages} showCheckbox={showCheckbox}/>
+        <GridItem imgUrl={imageUrl} onClick={() => handleClick(imageUrl)}/>
       ]);
     })
   }
@@ -82,10 +75,6 @@ const ImageGrid = () => {
 
   function handleClick(img) {
     setSideImage(img);
-  }
-
-  function enableSelect(img) {
-    setShowCheckbox(!showCheckbox);
   }
 
   const handleClose = () => {
@@ -167,8 +156,6 @@ const ImageGrid = () => {
           onChange={(e) => handleImageUpload(e)}
         /></span>
       </div>
-      
-      {showCheckbox && <Alert severity="info" sx={{paddingTop: "50px"}}>Select images to perform actions.</Alert>}
 
       <div className="image-grid-content">
         <div className="image-grid-items">
@@ -180,7 +167,6 @@ const ImageGrid = () => {
           <div className="image-grid-details">
             <div className="image-grid-details-content">
               <img alt="side img" src={sideImage}></img>
-              <p>placeholder text</p>
             </div>
           </div>
         )}
