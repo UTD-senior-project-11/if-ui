@@ -15,6 +15,8 @@ const HomePage = () => {
     <div className="home-page">
       <h1 className="home-page-header">Welcome to ImageFilter</h1>
 
+      <p className="home-page-tagline">An AI-powered image classification service built upon a training set of your creation.</p>
+
       {loggedIn === "false" ? (
         <div className="home-page-buttons-container">
           <button
@@ -39,7 +41,7 @@ const HomePage = () => {
             type="button"
             onClick={() => navigateToPage("/grid")}
           >
-            View Images?
+            View Banned Images
           </button>
           <button
             className="home-page-upload-button"

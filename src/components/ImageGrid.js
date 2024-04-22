@@ -2,6 +2,12 @@ import React, { useState, useRef } from "react";
 import "./ImageGrid.scss";
 import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const GridItem = (props) => {
   function restoreOriginalDimensions(e) {
@@ -33,6 +39,8 @@ const ImageGrid = () => {
   const [showCheckbox, setShowCheckbox] = useState(false);
   const [checkedImages, setCheckedImages] = useState();
   const [gridItemsArray, setGridItemsArray] = useState([]);
+  const [checkAI, setCheckAI] = useState(false);
+  const [banned, setBanned] = useState(false);
   const fetched = useRef(false);
 
   async function getImages() {
@@ -79,6 +87,10 @@ const ImageGrid = () => {
   function enableSelect(img) {
     setShowCheckbox(!showCheckbox);
   }
+
+  const handleClose = () => {
+    setCheckAI(false);
+  };
 
   /*
   * Encodes the uploaded image to a base64 string and
@@ -136,7 +148,9 @@ const ImageGrid = () => {
             })
             .then(response => response.json())
             .then((res) => {
-              console.log(res);
+              console.log(`ban result: ${res}`);
+              setBanned(res);
+              setCheckAI(true); // open check AI dialog
             });
     } catch (error) {
         console.error("Error:", error.message);
@@ -146,11 +160,7 @@ const ImageGrid = () => {
   return (
     <div className="image-grid">
       <div className="image-grid-actions-bar">
-        <span>Actions:</span>
-        <button className="image-grid-action-button button-select" type="button" onClick={enableSelect}>
-          Select
-        </button>
-        <span>Check image: <input
+        <span>Upload image to check: <input
           id="files"
           type="file"
           accept="image/jpeg"
@@ -175,6 +185,29 @@ const ImageGrid = () => {
           </div>
         )}
       </div>
+      <Dialog
+        open={checkAI}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Image Classification Result"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Based on the AI model trained thus far, the selected image is to be <b>{ banned ? "banned" : "not banned" }</b>.
+          </DialogContentText>
+          <DialogContentText sx={{ fontSize: "0.6rem" }}>
+            Disclaimer: The AI cannot promise 100% accuracy. Accuracy improves with a larger, diverse dataset.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

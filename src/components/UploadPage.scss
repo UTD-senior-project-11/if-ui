@@ -3,17 +3,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 95vh;
     background-color: #dae4ff;
 }
 
-$image-container-size: 30em;
+$image-container-size: 20em;
 
 .upload-page-title {
     color: black;
     font-family: monospace, sans-serif;
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2.2em;
 }
 
 .upload-page-upload-image-container {
@@ -42,7 +42,7 @@ $image-container-size: 30em;
 }
 
 .upload-page-upload-image-text-limits {
-    font-size: 1em;
+    font-size: 0.5em;
     color: black;
     margin-top: 10px;
 }

@@ -66,7 +66,7 @@ function Navbar() {
               ImageFilter
             </Typography>
 
-            <Box sx={{ display: "block" }}>
+            <Box sx={{ display: "flex", gap: "10px" }}>
               <Button
                 key={pageNames[0]}
                 sx={{
@@ -121,6 +121,7 @@ function Navbar() {
                 onClick={() => {
                   console.log("logging out");
                   localStorage.setItem("logged_in", false);
+                  setLoggedIn("false");
               }}
                 component={Link}
                 to={pageRoutes[0]}

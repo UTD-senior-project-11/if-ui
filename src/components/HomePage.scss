@@ -3,17 +3,26 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 95vh;
+    background: linear-gradient(90deg, transparent 24%,#cbd9ff 25%, #cbd9ff 30%, transparent 31%, transparent 39%,#cbd9ff 40%, #cbd9ff 45%, transparent 45%),linear-gradient(180deg, transparent 24%,#cbd9ff 25%, #cbd9ff 30%, transparent 31%, transparent 39%,#cbd9ff 40%, #cbd9ff 45%, transparent 45%);
+    background-size: 4em 4em;
     background-color: #dae4ff;
+    margin: 0;
 }
 
 .home-page-header {
-    font-size: 70px;
+    font-size: 75px;
     font-weight: 600;
     background-image: linear-gradient(to left, rgb(66, 60, 154), #8b72fc);
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
+    margin: 0;
+}
+
+.home-page-tagline {
+    font-size: 30px;
+    font-weight: 400;
 }
 
 .home-page-buttons-container {

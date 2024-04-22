@@ -162,7 +162,7 @@ const UploadPage = () => {
             sx={{ minHeight: "80vh" }}
             className="upload-page"
         >
-            <h1 className="upload-page-title">Upload image</h1>
+            <h1 className="upload-page-title">Upload Banned Image</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <FormControl>
                     <div className="upload-page-form-container">
@@ -186,7 +186,11 @@ const UploadPage = () => {
                                     />
                                 ) : (
                                     <div className="upload-page-upload-image-text">
-                                        <b>Select Image</b> or <b>Drag and Drop</b>
+                                        <b>Select Image</b>
+                                        <br />
+                                        or
+                                        <br />
+                                        <b>Drag and Drop</b>
                                         <br />
                                         <div className="upload-page-upload-image-text-limits">
                                             <span
