@@ -15,7 +15,7 @@ const HomePage = () => {
     <div className="home-page">
       <h1 className="home-page-header">Welcome to ImageFilter</h1>
 
-      <p className="home-page-tagline">An AI-powered image classification service built upon a training set of your creation.</p>
+      <p className="home-page-tagline">An AI-powered image classification service that aims to detect banned images.</p>
 
       {loggedIn === "false" ? (
         <div className="home-page-buttons-container">
