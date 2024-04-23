@@ -142,7 +142,7 @@ const ImageGrid = () => {
               console.log(res);
               const banStatus = res === "D" ? true : false; // ban dogs, allow cats
               console.log(`ban result: ${banStatus}`);
-              setBanned(res);
+              setBanned(banStatus);
               setCheckAI(true); // open check AI dialog
             });
     } catch (error) {
