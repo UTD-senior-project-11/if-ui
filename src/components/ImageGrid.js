@@ -96,7 +96,7 @@ const ImageGrid = () => {
         var base64Image = "";
 
         // Create a promise to handle the asynchronous file reading
-        const readImageFile = (file) => {
+        const readImageFile = async (file) => {
             return new Promise((resolve, reject) => {
                 reader.onload = function (e) {
                     base64Image = e.target?.result; // Encode image to base64 string
@@ -111,7 +111,7 @@ const ImageGrid = () => {
             });
         };
 
-        readImageFile(file)
+        await readImageFile(file)
             .then((base64Image) => {
                 //console.log(base64Image)
                 var strImage = base64Image.split("base64,")[1];
@@ -130,14 +130,18 @@ const ImageGrid = () => {
             .catch((error) => {
                 console.error("Error:", error);
             })
-            .then(() => {
+            /*.then(() => {
               return fetch("http://localhost:8080/image/compareresult", {
                 method: "GET"
               })
-            })
-            .then(response => response.json())
+            })*/
+            //.then(response => response.json())
+            .then(res => res.text())
             .then((res) => {
-              console.log(`ban result: ${res}`);
+              console.log(`res:`);
+              console.log(res);
+              const banStatus = res === "D" ? true : false; // ban dogs, allow cats
+              console.log(`ban result: ${banStatus}`);
               setBanned(res);
               setCheckAI(true); // open check AI dialog
             });
@@ -182,7 +186,7 @@ const ImageGrid = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Based on the AI model trained thus far, the selected image is to be <b>{ banned ? "banned" : "not banned" }</b>.
+            Based on the AI model trained thus far, the selected image is to be <b>{ banned ? "banned (dog)" : "not banned (cat)" }</b>.
           </DialogContentText>
           <DialogContentText sx={{ fontSize: "0.6rem" }}>
             Disclaimer: The AI cannot promise 100% accuracy. Accuracy improves with a larger, diverse dataset.
